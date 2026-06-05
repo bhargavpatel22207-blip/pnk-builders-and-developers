@@ -28,11 +28,15 @@ const SUPABASE_PUBLISHABLE_KEY =
   }
 
   return createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-    auth: {
-      storage: typeof window !== 'undefined' ? localStorage : undefined,
-      persistSession: true,
-      autoRefreshToken: true,
-    }
+ auth: {
+  storage: typeof window !== 'undefined' ? localStorage : undefined,
+  persistSession: true,
+  autoRefreshToken: true,
+
+  experimental: {
+    passkey: true,
+  },
+}
   });
 }
 

@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "pnk-builders-and-developers",
+  "compatibility_date": "2026-06-05",
+  "main": "dist/server/server.js",
+  "compatibility_flags": ["nodejs_compat"],
+
+  "assets": {
+    "directory": "./dist/client"
+  }
+}

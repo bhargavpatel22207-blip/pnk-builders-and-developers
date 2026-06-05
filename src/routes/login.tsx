@@ -15,7 +15,23 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const handlePasskeyLogin = async () => {
+  try {
+    setLoading(true);
 
+    const { error } = await supabase.auth.signInWithPasskey();
+
+    if (error) throw error;
+
+    navigate({ to: "/admin" });
+  } catch (err) {
+    toast.error(
+      err instanceof Error ? err.message : "Passkey login failed"
+    );
+  } finally {
+    setLoading(false);
+  }
+};
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       if (data.session) navigate({ to: "/admin" });
@@ -71,6 +87,14 @@ function LoginPage() {
               {loading && <Loader2 className="size-4 animate-spin" />}
               {mode === "signin" ? "Sign In" : "Create Account"}
             </button>
+            <button
+  type="button"
+  onClick={handlePasskeyLogin}
+  disabled={loading}
+  className="flex w-full items-center justify-center gap-2 rounded-full border border-input px-6 py-3 text-sm font-semibold transition hover:scale-[1.02] disabled:opacity-70"
+>
+  Sign in with Passkey
+</button>
           </form>
 
           <button
